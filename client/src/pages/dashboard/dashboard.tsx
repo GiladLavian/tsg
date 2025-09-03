@@ -3,7 +3,6 @@ import {
   AppBar,
   Box,
   Container,
-  Grid,
   Snackbar,
   Tab,
   Tabs,
@@ -11,11 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState, useCallback } from "react";
-import { AnalyticsDashboard } from "../../components/dashboard/analytics-dashboard";
-import { SubmissionsList } from "../../components/dashboard/submissions-list";
-import { DynamicForm } from "../../components/form/dynamic-form";
 import { useDashboard } from "../../context/dashboard.context";
 import { FormSchema } from "../../types/form.types";
+import { SubmitFormTab, SubmissionsTab, AnalyticsTab } from "../../components/dashboard";
 
 // Sample form schema (this would normally come from the API)
 const sampleSchema: FormSchema = {
@@ -191,19 +188,15 @@ export const DashboardContent: React.FC = () => {
         </Box>
 
         <TabPanel value={tabValue} index={0}>
-          <Grid container justifyContent="center">
-            <Grid item xs={12} md={8} lg={6}>
-              <DynamicForm
-                schema={sampleSchema}
-                onSubmitSuccess={handleFormSubmitSuccess}
-                onSubmitError={handleFormSubmitError}
-              />
-            </Grid>
-          </Grid>
+          <SubmitFormTab
+            schema={sampleSchema}
+            onSubmitSuccess={handleFormSubmitSuccess}
+            onSubmitError={handleFormSubmitError}
+          />
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <SubmissionsList
+          <SubmissionsTab
             submissions={state.submissions}
             loading={state.loading.submissions}
             error={state.error.submissions}
@@ -211,7 +204,7 @@ export const DashboardContent: React.FC = () => {
         </TabPanel>
 
         <TabPanel value={tabValue} index={2}>
-          <AnalyticsDashboard
+          <AnalyticsTab
             data={state.analytics}
             loading={state.loading.analytics}
             error={state.error.analytics}

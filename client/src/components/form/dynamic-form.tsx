@@ -1,18 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
+import { Alert, Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+import { useDashboard } from "../../context/dashboard.context";
+import { useFormState } from "../../hooks/useFormState";
+import { FormSchema } from "../../types/form.types";
 import {
-  Paper,
-  Typography,
-  Box,
-  Grid,
-  Alert,
-  Divider,
-} from '@mui/material';
-import { Button } from '../common/button';
-import { DynamicField } from './dynamic-field';
-import { FormSchema } from '../../types/form.types';
-import { useFormState } from '../../hooks/useFormState';
-import { useDashboard } from '../../context/dashboard.context';
-import { formatFormData, getInitialFormValues } from '../../utils/validation.utils';
+  formatFormData,
+  getInitialFormValues,
+} from "../../utils/validation.utils";
+import { Button } from "../common/button";
+import { DynamicField } from "./dynamic-field";
 
 interface DynamicFormProps {
   schema: FormSchema;
@@ -45,55 +41,64 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
   }, [schema.fields, setFormData]);
 
   // Handle field change
-  const handleFieldChange = useCallback((fieldName: string, value: any) => {
-    setFieldValue(fieldName, value);
-  }, [setFieldValue]);
+  const handleFieldChange = useCallback(
+    (fieldName: string, value: any) => {
+      setFieldValue(fieldName, value);
+    },
+    [setFieldValue]
+  );
 
   // Handle field blur (validation)
-  const handleFieldBlur = useCallback((fieldName: string) => {
-    const value = formState.data[fieldName];
-    validateSingleField(fieldName, value);
-  }, [formState.data, validateSingleField]);
+  const handleFieldBlur = useCallback(
+    (fieldName: string) => {
+      const value = formState.data[fieldName];
+      validateSingleField(fieldName, value);
+    },
+    [formState.data, validateSingleField]
+  );
 
   // Handle form submission
-  const handleSubmit = useCallback(async (event: React.FormEvent) => {
-    event.preventDefault();
-    
-    // Validate all fields
-    const isValid = validateForm();
-    if (!isValid) {
-      return;
-    }
+  const handleSubmit = useCallback(
+    async (event: React.FormEvent) => {
+      event.preventDefault();
 
-    try {
-      // Format data for submission
-      const formattedData = formatFormData(formState.data, schema.fields);
-      
-      // Submit form
-      await dashboardActions.submitForm(formattedData);
-      
-      // Reset form on success
-      resetForm();
-      
-      // Call success callback
-      if (onSubmitSuccess) {
-        onSubmitSuccess(formattedData);
+      // Validate all fields
+      const isValid = validateForm();
+      if (!isValid) {
+        return;
       }
-    } catch (error: any) {
-      // Call error callback
-      if (onSubmitError) {
-        onSubmitError(error.message);
+
+      try {
+        // Format data for submission
+        const formattedData = formatFormData(formState.data, schema.fields);
+
+        // Submit form
+        await dashboardActions.submitForm(formattedData);
+
+        // Reset form on success
+        resetForm();
+
+        // Call success callback
+        if (onSubmitSuccess) {
+          onSubmitSuccess(formattedData);
+        }
+      } catch (error: any) {
+        // Call error callback
+        if (onSubmitError) {
+          onSubmitError(error.message);
+        }
       }
-    }
-  }, [
-    validateForm,
-    formState.data,
-    schema.fields,
-    dashboardActions,
-    resetForm,
-    onSubmitSuccess,
-    onSubmitError,
-  ]);
+    },
+    [
+      validateForm,
+      formState.data,
+      schema.fields,
+      dashboardActions,
+      resetForm,
+      onSubmitSuccess,
+      onSubmitError,
+    ]
+  );
 
   // Handle form reset
   const handleReset = useCallback(() => {
@@ -106,9 +111,11 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
       <Box component="form" onSubmit={handleSubmit} noValidate>
         {/* Form Header */}
         <Typography variant="h5" gutterBottom>
-          {schema.name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+          {schema.name
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase())}
         </Typography>
-        
+
         {schema.description && (
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
             {schema.description}
@@ -127,7 +134,18 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
         {/* Form Fields */}
         <Grid container spacing={2}>
           {schema.fields.map((field) => (
-            <Grid item xs={12} sm={field.type === 'text' && field.maxLength && field.maxLength > 100 ? 12 : 6} key={field.name}>
+            <Grid
+              item
+              xs={12}
+              sm={
+                field.type === "text" &&
+                field.maxLength &&
+                field.maxLength > 100
+                  ? 12
+                  : 6
+              }
+              key={field.name}
+            >
               <DynamicField
                 field={field}
                 value={formState.data[field.name]}
@@ -140,7 +158,9 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
         </Grid>
 
         {/* Form Actions */}
-        <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+        <Box
+          sx={{ mt: 4, display: "flex", gap: 2, justifyContent: "flex-end" }}
+        >
           <Button
             variant="outlined"
             onClick={handleReset}
