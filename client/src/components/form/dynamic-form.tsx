@@ -125,9 +125,9 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
         <Divider sx={{ mb: 3 }} />
 
         {/* Error Display */}
-        {dashboardState.error.submit && (
+        {dashboardState.ui.submitError && (
           <Alert severity="error" sx={{ mb: 3 }}>
-            {dashboardState.error.submit}
+            {dashboardState.ui.submitError}
           </Alert>
         )}
 
@@ -164,14 +164,14 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
           <Button
             variant="outlined"
             onClick={handleReset}
-            disabled={dashboardState.loading.submitting}
+            disabled={dashboardState.ui.submittingForm}
           >
             Reset
           </Button>
           <Button
             type="submit"
             variant="contained"
-            loading={dashboardState.loading.submitting}
+            loading={dashboardState.ui.submittingForm}
             loadingText="Submitting..."
           >
             Submit

@@ -1,17 +1,16 @@
 import React, {
   createContext,
   ReactNode,
-  useCallback,
   useContext,
   useMemo,
   useReducer,
 } from "react";
-import { submissionService, analyticsService } from "../services";
-import { 
-  dashboardReducer, 
-  initialDashboardState, 
-  DashboardState 
+import {
+  dashboardReducer,
+  DashboardState,
+  initialDashboardState,
 } from "../reducers";
+import { analyticsService, submissionService } from "../services";
 
 // Context interface
 interface DashboardContextType {
@@ -41,145 +40,103 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({
 }) => {
   const [state, dispatch] = useReducer(dashboardReducer, initialDashboardState);
 
-  // Fetch all submissions
-  const fetchSubmissions = useCallback(async () => {
-    dispatch({
-      type: "SET_LOADING",
-      payload: { key: "submissions", value: true },
-    });
-    dispatch({
-      type: "SET_ERROR",
-      payload: { key: "submissions", value: null },
-    });
+  // Create completely stable action references with no dependencies
+  const actions = useMemo(
+    () => ({
+      fetchSubmissions: () => {
+        dispatch({ type: "SUBMISSIONS_SET_LOADING", payload: true });
+        dispatch({ type: "SUBMISSIONS_SET_ERROR", payload: null });
+        
+        return submissionService.getSubmissions()
+          .then(response => {
+            if (response.success && response.data) {
+              dispatch({ type: "SUBMISSIONS_SET_DATA", payload: response.data });
+            } else {
+              throw new Error(response.message || "Failed to fetch submissions");
+            }
+          })
+          .catch((error: any) => {
+            dispatch({ type: "SUBMISSIONS_SET_ERROR", payload: error.message });
+          })
+          .finally(() => {
+            dispatch({ type: "SUBMISSIONS_SET_LOADING", payload: false });
+          });
+      },
+      fetchSchema: (name: string) => {
+        dispatch({ type: "SCHEMA_SET_LOADING", payload: true });
+        dispatch({ type: "SCHEMA_SET_ERROR", payload: null });
 
-    try {
-      const response = await submissionService.getSubmissions();
-      if (response.success && response.data) {
-        dispatch({ type: "SET_SUBMISSIONS", payload: response.data });
-      } else {
-        throw new Error(response.message || "Failed to fetch submissions");
-      }
-    } catch (error: any) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: { key: "submissions", value: error.message },
-      });
-    } finally {
-      dispatch({
-        type: "SET_LOADING",
-        payload: { key: "submissions", value: false },
-      });
-    }
-  }, []);
+        return submissionService.getFormSchema(name)
+          .then(response => {
+            if (response.success && response.data) {
+              dispatch({ type: "SCHEMA_SET_DATA", payload: response.data });
+            } else {
+              throw new Error(response.message || "Failed to fetch schema");
+            }
+          })
+          .catch((error: any) => {
+            dispatch({ type: "SCHEMA_SET_ERROR", payload: error.message });
+          })
+          .finally(() => {
+            dispatch({ type: "SCHEMA_SET_LOADING", payload: false });
+          });
+      },
+      fetchAnalytics: () => {
+        dispatch({ type: "ANALYTICS_SET_LOADING", payload: true });
+        dispatch({ type: "ANALYTICS_SET_ERROR", payload: null });
+        
+        return analyticsService.getAnalytics()
+          .then(response => {
+            if (response.success && response.data) {
+              dispatch({ type: "ANALYTICS_SET_DATA", payload: response.data });
+            } else {
+              throw new Error(response.message || "Failed to fetch analytics");
+            }
+          })
+          .catch((error: any) => {
+            dispatch({ type: "ANALYTICS_SET_ERROR", payload: error.message });
+          })
+          .finally(() => {
+            dispatch({ type: "ANALYTICS_SET_LOADING", payload: false });
+          });
+      },
+      submitForm: async (data: Record<string, any>) => {
+        dispatch({ type: "UI_SET_SUBMITTING", payload: true });
+        dispatch({ type: "UI_SET_SUBMIT_ERROR", payload: null });
 
-  // Fetch form schema
-  const fetchSchema = useCallback(async (name: string) => {
-    dispatch({ type: "SET_LOADING", payload: { key: "schema", value: true } });
-    dispatch({ type: "SET_ERROR", payload: { key: "schema", value: null } });
-
-    try {
-      const response = await submissionService.getFormSchema(name);
-      if (response.success && response.data) {
-        dispatch({ type: "SET_SCHEMA", payload: response.data });
-      } else {
-        throw new Error(response.message || "Failed to fetch schema");
-      }
-    } catch (error: any) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: { key: "schema", value: error.message },
-      });
-    } finally {
-      dispatch({
-        type: "SET_LOADING",
-        payload: { key: "schema", value: false },
-      });
-    }
-  }, []);
-
-  // Fetch analytics data
-  const fetchAnalytics = useCallback(async () => {
-    dispatch({ type: 'SET_LOADING', payload: { key: 'analytics', value: true } });
-    dispatch({ type: 'SET_ERROR', payload: { key: 'analytics', value: null } });
-    try {
-      const response = await analyticsService.getAnalytics();
-      if (response.success && response.data) {
-        dispatch({ type: 'SET_ANALYTICS', payload: response.data });
-      } else {
-        throw new Error(response.message || 'Failed to fetch analytics');
-      }
-    } catch (error: any) {
-      dispatch({ type: 'SET_ERROR', payload: { key: 'analytics', value: error.message } });
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: { key: 'analytics', value: false } });
-    }
-  }, []);
-
-  // Submit form data
-  const submitForm = useCallback(
-    async (data: Record<string, any>) => {
-      dispatch({
-        type: "SET_LOADING",
-        payload: { key: "submitting", value: true },
-      });
-      dispatch({ type: "SET_ERROR", payload: { key: "submit", value: null } });
-
-      try {
-        const response = await submissionService.submitForm(data);
-        if (response.success && response.data) {
-          dispatch({ type: "ADD_SUBMISSION", payload: response.data });
-          // Refresh analytics after new submission
-          fetchAnalytics();
-        } else {
-          throw new Error(response.message || "Failed to submit form");
+        try {
+          const response = await submissionService.submitForm(data);
+          if (response.success && response.data) {
+            dispatch({ type: "SUBMISSIONS_ADD_ITEM", payload: response.data });
+          } else {
+            throw new Error(response.message || "Failed to submit form");
+          }
+        } catch (error: any) {
+          dispatch({ type: "UI_SET_SUBMIT_ERROR", payload: error.message });
+          throw error;
+        } finally {
+          dispatch({ type: "UI_SET_SUBMITTING", payload: false });
         }
-      } catch (error: any) {
-        dispatch({
-          type: "SET_ERROR",
-          payload: { key: "submit", value: error.message },
-        });
-        throw error; // Re-throw to allow form to handle it
-      } finally {
-        dispatch({
-          type: "SET_LOADING",
-          payload: { key: "submitting", value: false },
-        });
-      }
-    },
-    [fetchAnalytics]
+      },
+      clearErrors: () => {
+        dispatch({ type: "SUBMISSIONS_CLEAR_ERROR" });
+        dispatch({ type: "ANALYTICS_CLEAR_ERROR" });
+        dispatch({ type: "SCHEMA_CLEAR_ERROR" });
+        dispatch({ type: "UI_CLEAR_ERRORS" });
+      },
+      resetDashboard: () => {
+        dispatch({ type: "RESET_DASHBOARD" });
+      },
+    }),
+    [] // No dependencies at all
   );
-
-  // Clear all errors
-  const clearErrors = useCallback(() => {
-    dispatch({ type: "CLEAR_ERRORS" });
-  }, []);
-
-  // Reset dashboard state
-  const resetDashboard = useCallback(() => {
-    dispatch({ type: "RESET_DASHBOARD" });
-  }, []);
 
   const contextValue: DashboardContextType = useMemo(
     () => ({
       state,
-      actions: {
-        fetchSubmissions,
-        fetchSchema,
-        fetchAnalytics,
-        submitForm,
-        clearErrors,
-        resetDashboard,
-      },
+      actions,
     }),
-    [
-      state,
-      fetchSubmissions,
-      fetchSchema,
-      fetchAnalytics,
-      submitForm,
-      clearErrors,
-      resetDashboard,
-    ]
+    [state, actions]
   );
 
   return (

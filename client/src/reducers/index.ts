@@ -1,10 +1,16 @@
 // Form reducer exports
 export { formReducer, initialFormState } from './form.reducer';
 
-// Dashboard reducer exports
+// Dashboard reducer exports (now using combined reducer)
 export { 
   dashboardReducer, 
   initialDashboardState,
   type DashboardState,
   type DashboardAction 
-} from './dashboard.reducer';
+} from './combined.reducer';
+
+// Individual domain reducer exports
+export * from './submissions.reducer';
+export * from './analytics.reducer';
+export * from './schema.reducer';
+export * from './ui.reducer';

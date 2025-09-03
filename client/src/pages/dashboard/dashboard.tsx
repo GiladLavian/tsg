@@ -197,17 +197,19 @@ export const DashboardContent: React.FC = () => {
 
         <TabPanel value={tabValue} index={1}>
           <SubmissionsTab
-            submissions={state.submissions}
-            loading={state.loading.submissions}
-            error={state.error.submissions}
+            submissions={state.submissions.submissions}
+            loading={state.submissions.loading}
+            error={state.submissions.error}
+            isActive={tabValue === 1}
           />
         </TabPanel>
 
         <TabPanel value={tabValue} index={2}>
           <AnalyticsTab
-            data={state.analytics}
-            loading={state.loading.analytics}
-            error={state.error.analytics}
+            data={state.analytics.data}
+            loading={state.analytics.loading}
+            error={state.analytics.error}
+            isActive={tabValue === 2}
           />
         </TabPanel>
       </Container>
