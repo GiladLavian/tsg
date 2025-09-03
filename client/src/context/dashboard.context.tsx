@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useReducer,
 } from "react";
-import { apiService } from "../services/api.service";
+import { submissionService, analyticsService } from "../services";
 import { 
   dashboardReducer, 
   initialDashboardState, 
@@ -53,7 +53,7 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({
     });
 
     try {
-      const response = await apiService.getSubmissions();
+      const response = await submissionService.getSubmissions();
       if (response.success && response.data) {
         dispatch({ type: "SET_SUBMISSIONS", payload: response.data });
       } else {
@@ -78,7 +78,7 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({
     dispatch({ type: "SET_ERROR", payload: { key: "schema", value: null } });
 
     try {
-      const response = await apiService.getFormSchema(name);
+      const response = await submissionService.getFormSchema(name);
       if (response.success && response.data) {
         dispatch({ type: "SET_SCHEMA", payload: response.data });
       } else {
@@ -102,7 +102,7 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({
     dispatch({ type: 'SET_LOADING', payload: { key: 'analytics', value: true } });
     dispatch({ type: 'SET_ERROR', payload: { key: 'analytics', value: null } });
     try {
-      const response = await apiService.getAnalytics();
+      const response = await analyticsService.getAnalytics();
       if (response.success && response.data) {
         dispatch({ type: 'SET_ANALYTICS', payload: response.data });
       } else {
@@ -125,7 +125,7 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({
       dispatch({ type: "SET_ERROR", payload: { key: "submit", value: null } });
 
       try {
-        const response = await apiService.submitForm(data);
+        const response = await submissionService.submitForm(data);
         if (response.success && response.data) {
           dispatch({ type: "ADD_SUBMISSION", payload: response.data });
           // Refresh analytics after new submission
