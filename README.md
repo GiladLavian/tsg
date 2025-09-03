@@ -1,93 +1,138 @@
-# Dynamic Form Generation System
+# TSG - Dynamic Form System
 
-A full-stack TypeScript application that allows users to create and submit dynamic forms based on JSON schemas, with real-time analytics and data persistence.
+A comprehensive full-stack TypeScript application for creating, managing, and analyzing dynamic forms. Built with modern technologies and professional architecture patterns.
 
-![Project Demo](https://via.placeholder.com/800x400/1976d2/ffffff?text=Dynamic+Form+System)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Material UI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
 ## 🚀 Features
 
-### Frontend (React + Material-UI)
-- 📝 **Dynamic Form Rendering** - Generate forms based on JSON schemas
-- 🎯 **Real-time Validation** - Field-level validation with custom rules
-- 📊 **Analytics Dashboard** - Visual charts and statistics
-- 📋 **Submission Management** - View and manage form submissions
-- 🎨 **Modern UI** - Clean, responsive design with Material-UI
-- ⚡ **Real-time Updates** - Instant feedback and state management
+### Frontend (React 18 + TypeScript + Material-UI v5)
+- 📝 **Dynamic Form Generation** - JSON schema-based form rendering with comprehensive field types
+- 🎯 **Real-time Validation** - Immediate field validation with custom rules and error handling
+- 📊 **Interactive Analytics** - Rich dashboard with charts and data visualization using Recharts
+- 📋 **Submission Management** - Complete CRUD operations for form data
+- 🎨 **Modern Design System** - Professional UI with Material-UI v5 components
+- ⚡ **Optimized Performance** - useCallback optimization and professional state management
+- 🏗️ **Feature-Based Architecture** - Organized component structure with reducers pattern
+- 🔧 **TypeScript Coverage** - Full type safety across the entire application
 
-### Backend (Node.js + Express + Prisma)
-- 🛠️ **RESTful API** - Comprehensive API for form management
-- 🗄️ **PostgreSQL Database** - Reliable data persistence with Prisma ORM
-- 🔍 **Duplicate Detection** - Automatic duplicate submission prevention
-- 📊 **Analytics Engine** - Generate insights from form data
-- 🛡️ **Security Features** - Rate limiting, CORS, input validation
-- 📋 **Schema Validation** - Joi-based validation for all inputs
+### Backend (Node.js + Express + Prisma + PostgreSQL)
+- 🛠️ **RESTful API** - Comprehensive API with proper HTTP methods and status codes
+- 🗄️ **PostgreSQL Database** - Robust data persistence with Prisma ORM
+- 🔍 **Advanced Validation** - Joi schemas with comprehensive input validation
+- 📊 **Analytics Engine** - Sophisticated data aggregation and insights generation
+- 🛡️ **Enterprise Security** - Rate limiting, CORS, Helmet, input sanitization
+- 📋 **Schema Management** - Dynamic form schema validation and storage
+- 🚫 **Duplicate Prevention** - Intelligent duplicate detection algorithms
+- 📈 **Performance Monitoring** - Request logging and error tracking
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   React Client  │────▶│  Express API    │────▶│   PostgreSQL    │
-│                 │     │                 │     │                 │
-│ • Material-UI   │     │ • REST Routes   │     │ • Form Data     │
-│ • State Mgmt    │     │ • Validation    │     │ • Schemas       │
-│ • Charts        │     │ • Analytics     │     │ • Analytics     │
-│ • Forms         │     │ • Security      │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-```
-
+┌─────────────────────────────────────────────────────────────────┐
+│                     TSG - Dynamic Form System                   │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────────┐     ┌─────────────────┐     ┌─────────────┐ │
+│  │   React Client  │────▶│  Express API    │────▶│ PostgreSQL  │ │
+│  │                 │     │                 │     │             │ │
+│  │ • Material-UI   │     │ • TypeScript    │     │ • Prisma    │ │
+│  │ • TypeScript    │     │ • Joi Validation│     │ • ACID      │ │
+│  │ • State Mgmt    │◀────│ • Rate Limiting │     │ • Relations │ │
+│  │ • Recharts      │     │ • CORS/Security │     │             │ │
+│  └─────────────────┘     └─────────────────┘     └─────────────┘ │
+│                                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                        Component Structure                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Client (Port 3000)              Server (Port 5001)            │
+│  ├── components/                 ├── controllers/               │
+│  │   ├── dashboard/              │   ├── form.controller.ts     │
+│  │   │   ├── analytics/          │   └── analytics.controller.ts│
+│  │   │   ├── submission/         ├── middleware/                │
+│  │   │   └── view/               │   ├── validation.middleware.ts│
+│  │   └── form/                   │   └── security.middleware.ts │
+│  ├── reducers/                   ├── services/                  │
+│  │   ├── form.reducer.ts         │   ├── form.service.ts        │
+│  │   └── dashboard.reducer.ts    │   └── analytics.service.ts   │
+│  ├── context/                    ├── utils/                     │
+│  └── services/                   └── prisma/                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ## 🛠️ Tech Stack
 
-### Frontend
-- **React 18** - UI library
-- **TypeScript** - Type safety
-- **Material-UI v5** - Component library
-- **Recharts** - Data visualization
-- **Axios** - HTTP client
-- **Day.js** - Date handling
+### Frontend Stack
+- **React 18.2** - Modern UI library with hooks and concurrent features
+- **TypeScript 4.9** - Static type checking and enhanced developer experience
+- **Material-UI v5** - Google's Material Design component library
+- **Recharts 2.8** - Composable charting library for React
+- **Axios 1.5** - Promise-based HTTP client
+- **React Hook Form 7.46** - Performant forms with easy validation
+- **Day.js 1.11** - Lightweight date manipulation library
+- **Yup 1.3** - Schema validation library
 
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **TypeScript** - Type safety
-- **Prisma** - Database ORM
-- **PostgreSQL** - Database
-- **Joi** - Input validation
-- **Helmet** - Security middleware
+### Backend Stack
+- **Node.js 18+** - JavaScript runtime environment
+- **Express.js 4.18** - Fast, unopinionated web framework
+- **TypeScript 4.9** - Type-safe backend development
+- **Prisma 5.x** - Next-generation ORM with type safety
+- **PostgreSQL 12+** - Advanced open-source relational database
+- **Joi 17.x** - Powerful schema description and validation
+- **Helmet** - Security middleware for Express apps
+- **CORS** - Cross-Origin Resource Sharing middleware
+
+### Development Tools
+- **ESLint** - Code linting and quality checks
+- **Prettier** - Code formatting
+- **Nodemon** - Development server auto-restart
+- **ts-node** - TypeScript execution for Node.js
 
 ## 📋 Prerequisites
 
-- Node.js 18+
-- PostgreSQL 12+
-- npm or yarn
+- **Node.js 18+** - JavaScript runtime
+- **PostgreSQL 12+** - Database server
+- **npm or yarn** - Package manager
+- **Git** - Version control
 
 ## 🚀 Quick Start
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/GiladLavian/tsg.git
 cd tsg
 ```
 
-### 2. Setup Backend
+### 2. Setup Backend (Terminal 1)
 ```bash
 cd server
+
+# Install dependencies
 npm install
 
 # Configure environment variables
 cp .env.example .env
-# Edit .env with your database credentials
+# Edit .env with your PostgreSQL credentials
 
 # Setup database
 npm run prisma:generate
 npm run prisma:migrate
+npm run prisma:seed  # Optional: Load sample data
 
 # Start development server
 npm run dev
 ```
 
-### 3. Setup Frontend
+### 3. Setup Frontend (Terminal 2)
 ```bash
-cd ../client
+cd client
+
+# Install dependencies  
 npm install
 
 # Start development server
@@ -95,194 +140,372 @@ npm start
 ```
 
 ### 4. Access the Application
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
-- API Health Check: http://localhost:5000/health
+- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Backend API**: [http://localhost:5001](http://localhost:5001)
+- **API Health**: [http://localhost:5001/health](http://localhost:5001/health)
+- **API Docs**: [http://localhost:5001/api-docs](http://localhost:5001/api-docs)
 
 ## 📊 Supported Field Types
 
-The system supports various form field types with validation:
+The dynamic form system supports comprehensive field types with robust validation:
 
-| Type | Description | Validation Options |
-|------|-------------|-------------------|
-| `text` | Text input | minLength, maxLength, pattern |
-| `email` | Email input | Email format validation |
-| `password` | Password input | minLength, pattern |
-| `number` | Numeric input | min, max values |
-| `date` | Date picker | Date format validation |
-| `dropdown` | Select dropdown | Predefined options |
+| Field Type | Description | Validation Options | Features |
+|------------|-------------|-------------------|----------|
+| `text` | Single-line text input | minLength, maxLength, pattern, required | Placeholder, help text |
+| `textarea` | Multi-line text input | minLength, maxLength, required | Rows configuration |
+| `email` | Email input with validation | Email format, required | Built-in email validation |
+| `password` | Secure password input | minLength, pattern, required | Masked input, strength indicator |
+| `number` | Numeric input | min, max, step, required | Number formatting |
+| `date` | Date picker | min, max date, required | Calendar widget |
+| `select` | Dropdown selection | options, required | Single/multiple selection |
+| `radio` | Radio button group | options, required | Mutually exclusive options |
+| `checkbox` | Checkbox input | required | Boolean values |
+| `url` | URL input with validation | URL format, required | Link validation |
+| `tel` | Telephone input | Pattern validation, required | Phone number formatting |
 
-## 🔧 Configuration
-
-### Environment Variables
-
-#### Server (.env)
-```env
-NODE_ENV=development
-PORT=5000
-DATABASE_URL="postgresql://user:password@localhost:5432/tsg_db"
-ALLOWED_ORIGINS="http://localhost:3000"
-```
-
-#### Client (.env)
-```env
-REACT_APP_API_URL=http://localhost:5000/api
-REACT_APP_APP_NAME=Dynamic Form System
-```
-
-## 📝 API Documentation
-
-### Form Management
-
-#### Submit Form
-```http
-POST /api/forms/submit
-Content-Type: application/json
-
-{
-  "data": {
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john@example.com",
-    "age": 25
-  }
-}
-```
-
-#### Get Submissions
-```http
-GET /api/forms/submissions
-```
-
-#### Get Analytics
-```http
-GET /api/analytics
-```
-
-### Response Format
-```json
-{
-  "success": true,
-  "data": { ... },
-  "message": "Operation successful"
-}
-```
-
-## 📊 Sample Form Schema
-
+### Example Form Schema
 ```json
 {
   "name": "user-registration",
   "description": "User registration form",
   "fields": [
     {
-      "name": "firstName",
-      "type": "text",
-      "label": "First Name",
+      "name": "fullName",
+      "type": "text", 
+      "label": "Full Name",
       "required": true,
-      "minLength": 2,
-      "maxLength": 50
+      "validation": {
+        "minLength": 2,
+        "maxLength": 50
+      }
     },
     {
       "name": "email",
       "type": "email",
-      "label": "Email Address",
+      "label": "Email Address", 
       "required": true
     },
     {
       "name": "age",
       "type": "number",
       "label": "Age",
-      "required": true,
-      "min": 13,
-      "max": 120
-    },
-    {
-      "name": "gender",
-      "type": "dropdown",
-      "label": "Gender",
-      "required": true,
-      "options": ["Male", "Female", "Other"]
+      "validation": {
+        "min": 18,
+        "max": 120
+      }
     }
   ]
+}
+```
+## 🔧 Configuration
+
+### Environment Variables
+
+#### Server (.env)
+```env
+# Application
+NODE_ENV=development
+PORT=5001
+
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/tsg_db"
+
+# Security
+ALLOWED_ORIGINS="http://localhost:3000"
+JWT_SECRET="your-jwt-secret-key"
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000  # 15 minutes
+RATE_LIMIT_MAX_REQUESTS=100  # Max requests per window
+```
+
+#### Client (.env)
+```env
+# API Configuration
+REACT_APP_API_URL=http://localhost:5001
+REACT_APP_APP_NAME=TSG Dynamic Forms
+
+# Feature Flags
+REACT_APP_ENABLE_ANALYTICS=true
+REACT_APP_ENABLE_SUBMISSIONS_VIEW=true
+```
+
+## 📝 API Documentation
+
+### Core Endpoints
+
+#### Submit Form Data
+```http
+POST /api/submissions
+Content-Type: application/json
+
+{
+  "data": {
+    "fullName": "John Doe",
+    "email": "john@example.com",
+    "age": 28,
+    "preferences": ["newsletter", "updates"]
+  }
+}
+
+Response: 201 Created
+{
+  "success": true,
+  "data": {
+    "id": "123",
+    "submittedAt": "2025-09-03T10:30:00Z"
+  },
+  "message": "Form submitted successfully"
+}
+```
+
+#### Get All Submissions
+```http
+GET /api/submissions
+
+Response: 200 OK
+{
+  "success": true,
+  "data": [
+    {
+      "id": "123",
+      "data": { ... },
+      "submittedAt": "2025-09-03T10:30:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 150,
+    "page": 1,
+    "limit": 10
+  }
+}
+```
+
+#### Get Form Schema
+```http
+GET /api/schemas/user-registration
+
+Response: 200 OK
+{
+  "success": true,
+  "data": {
+    "name": "user-registration",
+    "description": "User registration form",
+    "fields": [ ... ]
+  }
+}
+```
+
+#### Get Analytics Data
+```http
+GET /api/analytics
+
+Response: 200 OK
+{
+  "success": true,
+  "data": {
+    "totalSubmissions": 150,
+    "averageAge": 28.5,
+    "genderDistribution": {
+      "male": 60,
+      "female": 75,
+      "other": 15
+    },
+    "submissionTrends": [ ... ]
+  }
+}
+```
+
+### Error Responses
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid input data",
+    "details": [
+      {
+        "field": "email",
+        "message": "Email is required"
+      }
+    ]
+  }
 }
 ```
 
 ## 🔒 Security Features
 
-- **Rate Limiting** - 100 requests per 15 minutes per IP
-- **CORS Protection** - Configurable allowed origins
-- **Input Validation** - Comprehensive validation with Joi
-- **SQL Injection Prevention** - Prisma ORM protection
-- **XSS Prevention** - Input sanitization
+- **Rate Limiting** - 100 requests per 15 minutes per IP address
+- **CORS Protection** - Configurable allowed origins with strict policies
+- **Input Validation** - Comprehensive validation using Joi schemas
+- **SQL Injection Prevention** - Prisma ORM provides built-in protection
+- **XSS Prevention** - Input sanitization and output encoding
+- **Helmet.js** - Sets security-related HTTP headers
+- **Request Logging** - Comprehensive logging for security monitoring
+- **Error Handling** - Secure error responses without information leakage
 
-## 📈 Analytics Features
+## 📈 Analytics & Insights
 
-- **Total Submissions** - Count of all form submissions
-- **Gender Distribution** - Pie chart of gender demographics
-- **Submission Trends** - Bar chart of submissions over time
-- **Average Age** - Statistical analysis of age data
-- **Field Usage** - Most commonly used form fields
+### Dashboard Features
+- **Real-time Metrics** - Live submission counts and statistics
+- **Interactive Charts** - Recharts-powered data visualization
+- **Demographic Analysis** - Age, gender, and preference distributions
+- **Submission Trends** - Time-series analysis of form submissions
+- **Field Analytics** - Most/least used fields and completion rates
+- **Performance Metrics** - Response times and error rates
 
-## 🧪 Development
+### Supported Chart Types
+- **Bar Charts** - Submission trends over time
+- **Pie Charts** - Gender and preference distributions  
+- **Line Charts** - Performance metrics and trends
+- **Area Charts** - Cumulative data visualization
+
+## 🧪 Development & Testing
 
 ### Available Scripts
 
-#### Server
+#### Server Commands
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
+npm run dev              # Start development server with nodemon
+npm run build            # Compile TypeScript to JavaScript
+npm run start            # Start production server
+npm run lint             # Run ESLint for code quality
+npm run lint:fix         # Auto-fix ESLint issues
 npm run prisma:generate  # Generate Prisma client
 npm run prisma:migrate   # Run database migrations
-npm run prisma:studio    # Open Prisma Studio
+npm run prisma:studio    # Open Prisma Studio (database GUI)
+npm run prisma:seed      # Seed database with sample data
 ```
 
-#### Client
+#### Client Commands  
 ```bash
-npm start            # Start development server
-npm run build        # Build for production
-npm test             # Run tests
+npm start                # Start development server (port 3000)
+npm run build            # Build optimized production bundle
+npm test                 # Run test suite with React Testing Library
+npm run lint             # Run ESLint and TypeScript checks
+npm run lint:fix         # Auto-fix linting issues
+npm run eject            # Eject from Create React App (one-way)
 ```
+
+### Code Quality
+- **ESLint** - TypeScript and React best practices
+- **Prettier** - Consistent code formatting
+- **TypeScript** - Static type checking
+- **Husky** - Git hooks for quality gates
+- **Jest** - Unit testing framework
+- **React Testing Library** - Component testing
 
 ## 📁 Project Structure
 
 ```
 tsg/
-├── client/                 # React frontend
+├── client/                     # React frontend application
+│   ├── public/                 # Static assets and HTML template
 │   ├── src/
-│   │   ├── components/     # React components
-│   │   │   ├── common/     # Reusable components
-│   │   │   ├── dashboard/  # Dashboard components
-│   │   │   └── form/       # Form components
-│   │   ├── context/        # React context
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── services/       # API services
-│   │   ├── types/          # TypeScript types
-│   │   └── utils/          # Utility functions
-│   └── public/            # Static assets
-└── server/                # Node.js backend
-    ├── src/
-    │   ├── config/        # Configuration files
-    │   ├── middlewares/   # Express middlewares
-    │   ├── routes/        # API routes
-    │   ├── services/      # Business logic
-    │   ├── types/         # TypeScript types
-    │   └── utils/         # Utility functions
-    └── prisma/           # Database schema
+│   │   ├── components/         # React components
+│   │   │   ├── dashboard/      # Dashboard feature components
+│   │   │   │   ├── analytics/  # Analytics widgets
+│   │   │   │   ├── submission/ # Form submission components
+│   │   │   │   └── view/       # Data viewing components
+│   │   │   └── form/           # Dynamic form components
+│   │   ├── context/            # React Context providers
+│   │   ├── hooks/              # Custom React hooks
+│   │   ├── pages/              # Top-level page components
+│   │   ├── reducers/           # State management reducers
+│   │   │   ├── form.reducer.ts
+│   │   │   ├── dashboard.reducer.ts
+│   │   │   └── index.ts
+│   │   ├── services/           # API service layer
+│   │   ├── types/              # TypeScript type definitions
+│   │   └── utils/              # Utility functions
+│   ├── package.json
+│   └── tsconfig.json
+├── server/                     # Node.js backend API
+│   ├── src/
+│   │   ├── controllers/        # Request handlers
+│   │   ├── middleware/         # Express middleware
+│   │   ├── routes/            # API route definitions
+│   │   ├── services/          # Business logic layer
+│   │   ├── utils/             # Utility functions
+│   │   └── types/             # TypeScript interfaces
+│   ├── prisma/                # Database schema and migrations
+│   │   ├── schema.prisma
+│   │   └── migrations/
+│   ├── package.json
+│   └── tsconfig.json
+├── README.md                   # This file
+└── tsg.code-workspace         # VS Code workspace configuration
+## 🚀 Deployment
+
+### Production Build
+
+#### Client
+```bash
+cd client
+npm run build
+# Deploy build/ folder to your hosting platform
 ```
+
+#### Server
+```bash
+cd server
+npm run build
+npm start
+# Ensure environment variables are configured for production
+```
+
+### Docker Support (Coming Soon)
+- Multi-stage Docker builds
+- Docker Compose for development
+- Production-ready containers
+
+## 🔮 Roadmap
+
+- [ ] **Authentication & Authorization** - User management and role-based access
+- [ ] **Form Builder UI** - Visual drag-and-drop form designer
+- [ ] **Advanced Analytics** - Machine learning insights and predictions
+- [ ] **Real-time Collaboration** - Multi-user form editing
+- [ ] **Export Features** - PDF/CSV export of submissions and analytics
+- [ ] **Webhook Integration** - Real-time notifications and integrations
+- [ ] **Mobile App** - React Native companion app
+- [ ] **API Rate Limiting** - Advanced rate limiting and quotas
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+We welcome contributions! Please follow these steps:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
+
+### Development Guidelines
+- Follow TypeScript best practices
+- Maintain test coverage above 80%
+- Use conventional commit messages
+- Update documentation for new features
+
+## 📞 Support
+
+- **Documentation**: [Project Wiki](https://github.com/GiladLavian/tsg/wiki)
+- **Issues**: [GitHub Issues](https://github.com/GiladLavian/tsg/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/GiladLavian/tsg/discussions)
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Create React App](https://create-react-app.dev/) for the React foundation
+- [Material-UI](https://mui.com/) for the design system
+- [Prisma](https://www.prisma.io/) for the excellent ORM
+- [Recharts](https://recharts.org/) for beautiful data visualization
+
+---
+
+**Built with ❤️ by Gilad Lavian**
 
 ## 🙏 Acknowledgments
 
