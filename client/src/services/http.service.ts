@@ -58,8 +58,32 @@ export class BaseHttpService {
           window.location.href = '/login';
         }
         
+        // Extract error message from server response
+        let errorMessage = error.message;
+        if (error.response?.data) {
+          // Try to get the error message from the server response
+          const serverResponse = error.response.data;
+          if (serverResponse.error) {
+            errorMessage = serverResponse.error;
+          } else if (serverResponse.message) {
+            errorMessage = serverResponse.message;
+          }
+        }
+        
         console.error('API Error:', error.response?.data || error.message);
-        return Promise.reject(error);
+        
+        // Create a new error with the extracted message
+        const enhancedError = new Error(errorMessage);
+        enhancedError.name = error.name;
+        
+        // Preserve the original error properties
+        Object.assign(enhancedError, {
+          response: error.response,
+          status: error.response?.status,
+          data: error.response?.data
+        });
+        
+        return Promise.reject(enhancedError);
       }
     );
   }

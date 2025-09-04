@@ -11,13 +11,12 @@ export class AnalyticsService {
   static async getAnalytics(): Promise<AnalyticsData> {
     const submissions = await prisma.formSubmission.findMany();
     
-    const analytics: AnalyticsData = {
-      totalSubmissions: submissions.length,
+    const analytics = new AnalyticsData(submissions.length, {
       submissionsByGender: this.calculateSubmissionsByGender(submissions),
       averageAge: this.calculateAverageAge(submissions),
       submissionsByDate: this.calculateSubmissionsByDate(submissions),
       topFormFields: this.calculateTopFormFields(submissions),
-    };
+    });
     
     return analytics;
   }

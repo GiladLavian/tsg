@@ -26,12 +26,11 @@ export class FormService {
       },
     });
     
-    return {
+    return new FormSubmission(submission.data as Record<string, any>, {
       id: submission.id,
-      data: submission.data as Record<string, any>,
       createdAt: submission.createdAt,
       updatedAt: submission.updatedAt,
-    };
+    });
   }
   
   /**
@@ -44,12 +43,14 @@ export class FormService {
       },
     });
     
-    return submissions.map(submission => ({
-      id: submission.id,
-      data: submission.data as Record<string, any>,
-      createdAt: submission.createdAt,
-      updatedAt: submission.updatedAt,
-    }));
+    return submissions.map(submission => new FormSubmission(
+      submission.data as Record<string, any>,
+      {
+        id: submission.id,
+        createdAt: submission.createdAt,
+        updatedAt: submission.updatedAt,
+      },
+    ));
   }
   
   /**
@@ -62,12 +63,11 @@ export class FormService {
     
     if (!submission) return null;
     
-    return {
+    return new FormSubmission(submission.data as Record<string, any>, {
       id: submission.id,
-      data: submission.data as Record<string, any>,
       createdAt: submission.createdAt,
       updatedAt: submission.updatedAt,
-    };
+    });
   }
   
   /**
